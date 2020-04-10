@@ -19,8 +19,8 @@ const validate = require("./middleware/validateContent");
 
 server.post("/email", validate, (req, res) => {
   const { senderemail, message, subject, name } = req.body;
-  const text = `Sender:${name}
-                Email:${senderemail}
+  const text = `Sender: ${name}
+                Email: ${senderemail}
                 Message: ${message}`;
 
   const transporter = nodemailer.createTransport({
