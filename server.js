@@ -16,7 +16,9 @@ server.use(express.json());
 // });
 
 server.post("/email", (req, res) => {
-  const { senderemail, message, subject } = req.body;
+  const { senderemail, text, subject, name } = req.body;
+  const message = `sender:${name} senderemail:${senderemail} message: ${text}`;
+  console.log(message);
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -27,10 +29,10 @@ server.post("/email", (req, res) => {
   });
 
   const mailOptions = {
-    from: senderemail,
-    to: "ojokuredim@gmail.com",
+    from: "ojokuredim@gmail.com",
+    to: "oladimejianthonyojokure@gmail.com",
     subject,
-    message,
+    text,
   };
 
   transporter.sendMail(mailOptions, (error, response) => {
