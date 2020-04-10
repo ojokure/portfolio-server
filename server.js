@@ -11,14 +11,17 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+const validate = require("./middleware/validateContent");
+
 // server.use("/", (req, res) => {
 //   res.send("<h1> Working... </h1>");
 // });
 
-server.post("/email", (req, res) => {
-  const { senderemail, text, subject, name } = req.body;
-  const message = `sender:${name} senderemail:${senderemail} message: ${text}`;
-  console.log(message);
+server.post("/email", validate, (req, res) => {
+  const { senderemail, message, subject, name } = req.body;
+  const text = `Sender:${name}
+                Email:${senderemail}
+                Message: ${message}`;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
